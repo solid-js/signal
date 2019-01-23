@@ -1,0 +1,7 @@
+# -- typescript-npm-starter
+
+# typescript-npm-starter gitignore
+.DS_Store
+node_modules/
+dist/
+docs/

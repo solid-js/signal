@@ -1,0 +1,76 @@
+{
+  "description": "Object based event system. Can replace classic event implementation, with strong typing. Inspired from Robert Penner's as3 Signals.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^10.12.11",
+    "@zouloux/semver-increment": "^0.2.0",
+    "docsify": "^4.8.6",
+    "docsify-cli": "^4.3.0",
+    "gh-pages": "^1.2.0",
+    "husky": "^1.2.0",
+    "mocha": "^5.2.0",
+    "npm-scripts-info": "^0.3.9",
+    "typescript": "^3.2.1"
+  },
+  "scripts": {
+    "help": "node tools/help.js",
+    "1-------------------------------------": " BUILD & TEST",
+    "?build": "echo Compile typescript sources to JS files and typescript definitions.",
+    "build": "node tools/build",
+    "?test": "echo Run unit tests on compiled files.",
+    "test": "mocha tests/tests.js",
+    "?dev": "echo Use dev.js to work on your lib before it's testable.",
+    "dev": "npm run build --silent quick-compile && node tests/dev",
+    "?check": "echo Clean, build and run tests.",
+    "check": "npm run clean --silent && npm run build --silent && npm run test --silent",
+    "2-------------------------------------": " PACKAGE TOOLS ",
+    "?clean": "echo Remove all generated files like compiled JS files and typescript definitions.",
+    "clean": "rm -rf dist/ && mkdir -p dist/",
+    "?reinstall": "echo Remove and re-install all node modules.",
+    "reinstall": "rm -rf node_modules/ package-lock.json && npm i",
+    "?increment": "echo Increment package.json version with semver argument (major|minor|patch). Default is patch.",
+    "increment": "node tools/increment",
+    "3-------------------------------------": " DOCUMENTATION ",
+    "?doc": "echo Start documentation server.",
+    "doc": "docsify serve doc",
+    "4-------------------------------------": " RELEASE ",
+    "?release": "echo Publish new version on Git / NPM and update documentation.\nUsage : npm run publish (patch|minor|major|wip) \"commit message\" ",
+    "release": "node tools/release",
+    "?wip": "echo Push a work in progress version to Git. Nothing will be tested and published to NPM.",
+    "wip": "node tools/release wip"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "node tools/pre-commit.js",
+      "pre-push": "node tools/pre-push.js"
+    }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "name": "@solid-js/signal",
+  "version": "0.2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/solid-js/signal.git"
+  },
+  "keywords": [
+    "signal",
+    "event",
+    "system",
+    "object",
+    "strong",
+    "typing",
+    "typescript",
+    "as3"
+  ],
+  "author": "Alexis Bouhet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/solid-js/signal/issues"
+  },
+  "homepage": "https://github.com/solid-js/signal#readme"
+}
