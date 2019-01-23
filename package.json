@@ -37,7 +37,7 @@
     "?doc": "echo Start documentation server.",
     "doc": "docsify serve doc",
     "4-------------------------------------": " RELEASE ",
-    "?release": "echo Publish new version on Git / NPM and update documentation.\nUsage : npm run publish (patch|minor|major|wip) \"commit message\" ",
+    "?release": "echo Publish new version on Git / NPM and update documentation.\nUsage : npm run release (patch|minor|major) \"commit message\" ",
     "release": "node tools/release",
     "?wip": "echo Push a work in progress version to Git. Nothing will be tested and published to NPM.",
     "wip": "node tools/release wip"
