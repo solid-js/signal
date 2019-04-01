@@ -10,7 +10,6 @@
     "docsify": "^4.8.6",
     "docsify-cli": "^4.3.0",
     "gh-pages": "^1.2.0",
-    "husky": "^1.2.0",
     "mocha": "^5.2.0",
     "npm-scripts-info": "^0.3.9",
     "typescript": "^3.2.1"
@@ -36,23 +35,18 @@
     "3-------------------------------------": " DOCUMENTATION ",
     "?doc": "echo Start documentation server.",
     "doc": "docsify serve doc",
+    "publish-doc": "gh-pages -d doc",
     "4-------------------------------------": " RELEASE ",
     "?release": "echo Publish new version on Git / NPM and update documentation.\nUsage : npm run release (patch|minor|major) \"commit message\" ",
     "release": "node tools/release",
-    "?wip": "echo Push a work in progress version to Git. Nothing will be tested and published to NPM.",
+    "?wip": "echo Push a work in progress to Git. Nothing will be tested or published.",
     "wip": "node tools/release wip"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "node tools/pre-commit.js",
-      "pre-push": "node tools/pre-push.js"
-    }
   },
   "directories": {
     "test": "tests"
   },
   "name": "@solid-js/signal",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/solid-js/signal.git"
