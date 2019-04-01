@@ -6,28 +6,17 @@
  */
 interface IListener<GArguments>
 {
-	scope		:any;
+	scope		:object;
 	handler		:(...GArguments) => any;
 	once		:boolean;
 }
 
-interface TEventDispatcherLike <GArguments extends any[] = any[]>
-{
-	addEventListener( type:string, handler?:(event:GArguments[0], ...rest) => any, ...rest )
-
-	removeEventListener( type:string, handler?:(event:GArguments[0], ...rest) => any )
-
-	dispatch( type:string, event:GArguments[0] )
-}
-
 /**
- * TODO DOC
+ * Describes a Signal handler type.
  */
 type THandler<GArguments> = (...GArguments) => any
 
-/**
- * TODO : Doc
- */
+
 export class Signal <GArguments extends any[] = any[]>
 {
 	// ------------------------------------------------------------------------- LOCALS
@@ -40,35 +29,6 @@ export class Signal <GArguments extends any[] = any[]>
 
 	// Get total attached listeners
 	get length ():number { return this._listeners.length; }
-
-	// ------------------------------------------------------------------------- FROM EVENTS
-
-
-	protected _fromDispatcher			:TEventDispatcherLike;
-	protected _fromEvents				:string[];
-
-
-	constructor ( fromDispatcher?:TEventDispatcherLike, fromEvents?:string[], ...rest )
-	{
-		if ( this._fromDispatcher == null || this._fromEvents == null ) return;
-		
-		this._fromDispatcher = fromDispatcher;
-		this._fromEvents = fromEvents;
-
-		this._fromEvents.map(
-			event => this._fromDispatcher.addEventListener( event, this.dispatcherEventHandler, ...rest )
-		);
-	}
-
-	static fromEvent <GArguments extends any[] = any[]> ( fromDispatcher?:TEventDispatcherLike<GArguments>, fromEvents?:string[], ...rest ):Signal<GArguments>
-	{
-		return new Signal<GArguments>( fromDispatcher, fromEvents, ...rest);
-	}
-
-	protected dispatcherEventHandler ( event:GArguments[0], ...rest )
-	{
-		this.dispatch.call(this, event, ...rest);
-	}
 
 
 	// ------------------------------------------------------------------------- ADDING / LISTENING
@@ -86,11 +46,12 @@ export class Signal <GArguments extends any[] = any[]>
 	 * @param andCall 
 	 * @returns {number} The register index, to remove easily.
 	 */
-	add ( scopeOrHandler:THandler<GArguments>|any, handlerIfScope?: THandler<GArguments>, andCall:GArguments[] = null ):void
+	add ( scopeOrHandler:THandler<GArguments> ):void
+	add ( scopeOrHandler:object, handlerIfScope?: THandler<GArguments>, andCall:GArguments[] = null ):void
 	{
 		arguments.length == 1
-		? this.register( scopeOrHandler, null, false, andCall )
-		: this.register( handlerIfScope, scopeOrHandler, false, andCall );
+		? this.register( scopeOrHandler as THandler<GArguments>, null, false, andCall )
+		: this.register( handlerIfScope, scopeOrHandler as object, false, andCall );
 	}
 
 	/**
@@ -100,24 +61,26 @@ export class Signal <GArguments extends any[] = any[]>
 	 * @param handlerIfScope Scope to apply to handler. Let null to keep default.
 	 * @param andCall 
 	 */
-	addOnce ( scopeOrHandler:THandler<GArguments>|any, handlerIfScope?: THandler<GArguments>, andCall:GArguments[] = null ):void
+	addOnce ( scopeOrHandler:THandler<GArguments> ):void
+	addOnce ( scopeOrHandler:object, handlerIfScope?: THandler<GArguments>, andCall:GArguments[] = null ):void
 	{
 		arguments.length == 1
-		? this.register( scopeOrHandler, null, true, andCall )
-		: this.register( handlerIfScope, scopeOrHandler, true, andCall );
+		? this.register( scopeOrHandler as THandler<GArguments>, null, true, andCall )
+		: this.register( handlerIfScope, scopeOrHandler as object, true, andCall );
 	}
 
 	/**
 	 * Register a listening.
 	 */
-	protected register ( handler:THandler<GArguments>, scope:any, once:boolean, andCall:GArguments[] ):void
+	protected register ( handler:THandler<GArguments>, scope:object, once:boolean, andCall:GArguments[] ):void
 	{
 		// Do not include this code in production
 		if ( process.env.NODE_ENV != 'production' )
 		{
 			if ( !handler.hasOwnProperty('prototype') && scope == null )
 			{
-				console.warn( 'Attention !' );
+				// TODO : CHECK AND DOC
+				throw new Error(`Signal // Attention !`);
 			}
 		}
 		
@@ -173,9 +136,9 @@ export class Signal <GArguments extends any[] = any[]>
 	 */
 	remove ( scopeOrHandler:THandler<GArguments>|any, handlerIfScope?: THandler<GArguments> ):void
 	{
+		// Get scope and handler depending on arguments order
 		let scope:any;
 		let handler:THandler<GArguments>;
-
 		if ( arguments.length == 1 )
 		{
 			scope = null;
@@ -188,7 +151,7 @@ export class Signal <GArguments extends any[] = any[]>
 		}
 
 		// New set of listeners
-		let newListeners		:IListener<GArguments>[]	= [];
+		let newListeners:IListener<GArguments>[] = [];
 
 		// Browse all listeners
 		const total = this._listeners.length;
@@ -245,15 +208,7 @@ export class Signal <GArguments extends any[] = any[]>
 	 */
 	dispose ():void
 	{
+		// Remove listeners array
 		delete this._listeners;
-
-		if (this._fromDispatcher == null) return;
-		
-		this._fromEvents.map(
-			event => this._fromDispatcher.removeEventListener( event, this.dispatcherEventHandler )
-		);
-
-		delete this._fromDispatcher;
-		delete this._fromEvents;
 	}
 }

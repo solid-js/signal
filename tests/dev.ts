@@ -4,13 +4,49 @@
  * Useful when trying to get something working before it's testable.
  */
 
-const { Signal, StateSignal } = require('../dist/index');
+import  { Signal, EventSignal, StateSignal } from '../dist/index';
  
-
-console.log(Signal);
-console.log(StateSignal);
 
 
 
 //const onClicked = Signal.fromEvent(document, 'click');
 
+
+//const eventSignal = new EventSignal<MouseEvent>( document, 'click' );
+
+
+
+
+const objectStateSignal = new StateSignal<{ on: boolean }>({ on: false });
+
+
+objectStateSignal.add( state =>
+{
+	// FIXME : state.otherProp devrait lever une erreur TS
+	console.log('State signal', state, state.otherProp);
+});
+
+
+objectStateSignal.dispatch({ on: true });
+objectStateSignal.dispatch({ on: true });
+objectStateSignal.dispatch({ on: false });
+objectStateSignal.dispatch({ on: false });
+objectStateSignal.dispatch({ on: true });
+objectStateSignal.dispose();
+
+
+const simpleStateSignal = new StateSignal<boolean>(false);
+
+
+simpleStateSignal.add( state =>
+{
+	console.log('Simple state signal', state);
+});
+
+
+simpleStateSignal.dispatch( true );
+simpleStateSignal.dispatch( true );
+simpleStateSignal.dispatch( false );
+simpleStateSignal.dispatch( false );
+simpleStateSignal.dispatch( true );
+simpleStateSignal.dispose();
