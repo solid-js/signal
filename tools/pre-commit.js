@@ -42,7 +42,7 @@ if ( inRealPackage() )
 // Clean and build sources. Halt on error.
 try
 {
-	exec(`npm run clean --silent && npm run build --silent`, true);
+	exec(`npm run clean && npm run build && npm run compress`, true);
 }
 catch (e)
 {
@@ -55,7 +55,7 @@ catch (e)
 try
 {
 	log(`Running tests ...`);
-	exec(`npm run test --silent`, true);
+	exec(`npm run test`, true);
 	log(`Done !\n`);
 }
 catch (e)
