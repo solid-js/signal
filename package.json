@@ -9,9 +9,11 @@
     "@zouloux/semver-increment": "^0.2.0",
     "docsify": "^4.8.6",
     "docsify-cli": "^4.3.0",
+    "filesize": "^4.1.2",
     "gh-pages": "^1.2.0",
     "mocha": "^5.2.0",
     "npm-scripts-info": "^0.3.9",
+    "terser": "^3.17.0",
     "typescript": "^3.2.1"
   },
   "scripts": {
@@ -25,6 +27,8 @@
     "dev": "npm run build --silent quick-compile && tsc tests/dev.ts && node tests/dev.js",
     "?check": "echo Clean, build and run tests.",
     "check": "npm run clean --silent && npm run build --silent && npm run test --silent",
+    "?compress": "echo Will compress compiled code with Terser as a production release, then show compressed bundle size.",
+    "compress": "node tools/compress",
     "2-------------------------------------": " PACKAGE TOOLS ",
     "?clean": "echo Remove all generated files like compiled JS files and typescript definitions.",
     "clean": "rm -rf dist/ && mkdir -p dist/",

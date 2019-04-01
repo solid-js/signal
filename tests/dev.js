@@ -6,3 +6,4 @@
 var _a = require('../dist/index'), Signal = _a.Signal, StateSignal = _a.StateSignal;
 console.log(Signal);
 console.log(StateSignal);
+//const onClicked = Signal.fromEvent(document, 'click');

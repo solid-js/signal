@@ -4,8 +4,13 @@
  * Useful when trying to get something working before it's testable.
  */
 
-const {Signal, StateSignal} = require('../dist/index');
+const { Signal, StateSignal } = require('../dist/index');
  
 
 console.log(Signal);
 console.log(StateSignal);
+
+
+
+//const onClicked = Signal.fromEvent(document, 'click');
+

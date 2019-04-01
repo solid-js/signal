@@ -11,6 +11,18 @@ interface IListener<GArguments>
 	once		:boolean;
 }
 
+interface TEventDispatcherLike <GArguments extends any[] = any[]>
+{
+	addEventListener( type:string, handler?:(event:GArguments[0], ...rest) => any, ...rest )
+
+	removeEventListener( type:string, handler?:(event:GArguments[0], ...rest) => any )
+
+	dispatch( type:string, event:GArguments[0] )
+}
+
+/**
+ * TODO DOC
+ */
 type THandler<GArguments> = (...GArguments) => any
 
 /**
@@ -28,6 +40,35 @@ export class Signal <GArguments extends any[] = any[]>
 
 	// Get total attached listeners
 	get length ():number { return this._listeners.length; }
+
+	// ------------------------------------------------------------------------- FROM EVENTS
+
+
+	protected _fromDispatcher			:TEventDispatcherLike;
+	protected _fromEvents				:string[];
+
+
+	constructor ( fromDispatcher?:TEventDispatcherLike, fromEvents?:string[], ...rest )
+	{
+		if ( this._fromDispatcher == null || this._fromEvents == null ) return;
+		
+		this._fromDispatcher = fromDispatcher;
+		this._fromEvents = fromEvents;
+
+		this._fromEvents.map(
+			event => this._fromDispatcher.addEventListener( event, this.dispatcherEventHandler, ...rest )
+		);
+	}
+
+	static fromEvent <GArguments extends any[] = any[]> ( fromDispatcher?:TEventDispatcherLike<GArguments>, fromEvents?:string[], ...rest ):Signal<GArguments>
+	{
+		return new Signal<GArguments>( fromDispatcher, fromEvents, ...rest);
+	}
+
+	protected dispatcherEventHandler ( event:GArguments[0], ...rest )
+	{
+		this.dispatch.call(this, event, ...rest);
+	}
 
 
 	// ------------------------------------------------------------------------- ADDING / LISTENING
@@ -204,6 +245,15 @@ export class Signal <GArguments extends any[] = any[]>
 	 */
 	dispose ():void
 	{
-		this._listeners = null;
+		delete this._listeners;
+
+		if (this._fromDispatcher == null) return;
+		
+		this._fromEvents.map(
+			event => this._fromDispatcher.removeEventListener( event, this.dispatcherEventHandler )
+		);
+
+		delete this._fromDispatcher;
+		delete this._fromEvents;
 	}
 }
