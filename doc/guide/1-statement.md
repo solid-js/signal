@@ -5,14 +5,12 @@ A signal should never be overridable from outside
 ```javascript
 class MyClass
 {
-	// Bad example, we can override this Signal from outisde
+	// BAD, this Signal can be overridden from outisde
 	public onWindowResized = new Signal()
 }
 ```
 
-### Solution A
-
-Use a getter :
+?> __Solution 1__, use a getter :
 
 ```javascript
 class MyClass
@@ -22,9 +20,7 @@ class MyClass
 }
 ```
 
-### Solution B
-
-Use a `readonly` property ( Typescript only ) :
+?> __Solution 2__, use a `readonly` property ( Typescript only ) :
 
 ```javascript
 class MyClass
