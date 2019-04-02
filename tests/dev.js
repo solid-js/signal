@@ -8,21 +8,53 @@ exports.__esModule = true;
 var index_1 = require("../dist/index");
 //const onClicked = Signal.fromEvent(document, 'click');
 //const eventSignal = new EventSignal<MouseEvent>( document, 'click' );
-var classicSignal = new index_1.Signal();
+var HandlerTest = /** @class */ (function () {
+    function HandlerTest(uid) {
+        this.onTestSignal = new index_1.Signal();
+        this._uid = uid;
+        this.onTestSignal.add(this, this.handler);
+    }
+    HandlerTest.prototype.handler = function () {
+        console.log('Handler ', this._uid);
+    };
+    HandlerTest.prototype.dispose = function () {
+        this.onTestSignal.remove(this, this.handler);
+    };
+    return HandlerTest;
+}());
+var allHandlerTests = [];
+for (var i = 0; i < 20; i++) {
+    var test = new HandlerTest(i);
+    allHandlerTests.push(test);
+}
+allHandlerTests.map(function (test) { return test.onTestSignal.dispatch(); });
+allHandlerTests[5].dispose();
+allHandlerTests.map(function (test) { return test.onTestSignal.dispatch(); });
+//allHandlerTests.map( test => test.dispose() );
+//allHandlerTests.map( test => test.onTestSignal.dispatch() );
 /*
-classicSignal.add(this, (object) =>
+
+const classicSignal = new Signal<[number|void]>();
+
+
+//classicSignal.add(this, (object) =>
+//{
+//	console.log('Signal', object.test);
+//});
+
+
+classicSignal.add( response =>
 {
-    console.log('Signal', object.test);
-});
-*/
-classicSignal.add(function (response) {
     console.log('Signal', response);
 });
-classicSignal.dispatch(1);
+
+classicSignal.dispatch( 1 );
 //classicSignal.dispatch('test');
 //classicSignal.dispatch( null );
 //classicSignal.dispatch({ trop: 'bien' });
 classicSignal.dispatch();
+
+*/
 /*
 const objectStateSignal = new StateSignal<{ on: boolean }>({ on: false });
 

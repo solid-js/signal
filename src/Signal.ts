@@ -62,28 +62,18 @@ export class Signal <GArguments extends any[] = any[]>
 	 * @param handlerIfScope Scope to apply to handler. Let null to keep default.
 	 * @param andCall 
 	 */
-	addOnce ( scopeOrHandler:THandler<GArguments>|object, handlerIfScope?: THandler<GArguments>, andCall:GArguments[] = null ):void
+	addOnce ( scopeOrHandler:THandler<GArguments>|object, handlerIfScope?: THandler<GArguments>):void
 	{
 		arguments.length == 1
-		? this.register( scopeOrHandler as THandler<GArguments>, null, true, andCall )
-		: this.register( handlerIfScope, scopeOrHandler as object, true, andCall );
+		? this.register( scopeOrHandler as THandler<GArguments>, null, true )
+		: this.register( handlerIfScope, scopeOrHandler as object, true );
 	}
 
 	/**
-	 * Register a listening.
+	 * Register a listener.
 	 */
-	protected register ( handler:THandler<GArguments>, scope:object, once:boolean, andCall:GArguments[] ):void
+	protected register ( handler:THandler<GArguments>, scope:object, once:boolean, andCall:GArguments[] = null ):void
 	{
-		// Do not include this code in production
-		if ( process.env.NODE_ENV != 'production' )
-		{
-			if ( !handler.hasOwnProperty('prototype') && scope == null )
-			{
-				// TODO : CHECK AND DOC
-				throw new Error(`Signal // Attention !`);
-			}
-		}
-		
 		// Store this listener with its scope
 		this._listeners.push({ handler, scope, once });
 
@@ -179,15 +169,17 @@ export class Signal <GArguments extends any[] = any[]>
 		// Do not include this code in production
 		if ( process.env.NODE_ENV != 'production' )
 		{
+			const handlerSignature = handler.name || handler.toString();
+
 			// Throw error if handler has not been found and deleted.
 			if ( newListeners.length == this._listeners.length )
 			{
-				throw new Error(`Signal // Handler ${handler} has not been removed. Set scope if needed and avoid adding binded functions.`);
+				throw new Error(`Signal // Handler ${handlerSignature} has not been removed. Set scope if needed and avoid adding binded functions.`);
 			}
 			// Throw error if more than one handler has been deleted
 			else if ( newListeners.length < this._listeners.length - 1 )
 			{
-				throw new Error(`Signal // Handler ${handler} has not been removed. Set scope if needed and avoid adding binded functions.`);
+				throw new Error(`Signal // Handler ${handlerSignature} has not been removed. Set scope if needed and avoid adding binded functions.`);
 			}
 		}
 

@@ -10,14 +10,57 @@ import  { Signal, EventSignal, StateSignal } from '../dist/index';
 //const eventSignal = new EventSignal<MouseEvent>( document, 'click' );
 
 
-const classicSignal = new Signal<[number|void]>();
+
+
+
+class HandlerTest
+{
+
+	readonly onTestSignal = new Signal();
+
+	protected _uid;
+
+	constructor (uid)
+	{
+		this._uid = uid;
+		this.onTestSignal.add( this, this.handler );
+	}
+
+	handler ()
+	{
+		console.log('Handler ', this._uid);
+	}
+
+	dispose ()
+	{
+		this.onTestSignal.dispose();
+	}
+
+}
+
+let allHandlerTests = [];
+for (var i = 0; i < 20; i++)
+{
+	const test = new HandlerTest( i );
+	allHandlerTests.push( test );
+}
+
+allHandlerTests.map( test => test.onTestSignal.dispatch() );
+allHandlerTests[5].dispose();
+allHandlerTests.map( test => test.onTestSignal.dispatch() );
+//allHandlerTests.map( test => test.dispose() );
+//allHandlerTests.map( test => test.onTestSignal.dispatch() );
+
 
 /*
-classicSignal.add(this, (object) =>
-{
-	console.log('Signal', object.test);
-});
-*/
+
+const classicSignal = new Signal<[number|void]>();
+
+
+//classicSignal.add(this, (object) =>
+//{
+//	console.log('Signal', object.test);
+//});
 
 
 classicSignal.add( response =>
@@ -31,7 +74,7 @@ classicSignal.dispatch( 1 );
 //classicSignal.dispatch({ trop: 'bien' });
 classicSignal.dispatch();
 
-
+*/
 /*
 const objectStateSignal = new StateSignal<{ on: boolean }>({ on: false });
 
