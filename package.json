@@ -28,8 +28,6 @@
     "dev": "npm run build --silent quick-compile && tsc tests/dev.ts && node tests/dev.js",
     "?check": "echo Clean, build and run tests.",
     "check": "npm run clean --silent && npm run build --silent && npm run test --silent",
-    "?compress": "echo Compress compiled code with Terser as a production release, then show compressed bundle size.",
-    "compress": "node tools/compress",
     "2-------------------------------------": " PACKAGE TOOLS ",
     "?clean": "echo Remove all generated files like compiled JS files and typescript definitions.",
     "clean": "rm -rf dist/ && mkdir -p dist/",
