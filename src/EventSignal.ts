@@ -8,7 +8,6 @@ import { Signal } from "./Signal";
 interface TEventDispatcherLike <GEvent>
 {
 	addEventListener( type:string, handler?:(event:GEvent, ...rest) => any, ...rest )
-
 	removeEventListener( type:string, handler?:(event:GEvent, ...rest) => any )
 
 	// NOTE : Dispatch first argument's type is from GArguments array

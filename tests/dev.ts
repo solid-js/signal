@@ -6,17 +6,33 @@
 
 import  { Signal, EventSignal, StateSignal } from '../dist/index';
  
-
-
-
 //const onClicked = Signal.fromEvent(document, 'click');
-
-
 //const eventSignal = new EventSignal<MouseEvent>( document, 'click' );
 
 
+const classicSignal = new Signal<[number|void]>();
+
+/*
+classicSignal.add(this, (object) =>
+{
+	console.log('Signal', object.test);
+});
+*/
 
 
+classicSignal.add( response =>
+{
+	console.log('Signal', response);
+});
+
+classicSignal.dispatch( 1 );
+//classicSignal.dispatch('test');
+//classicSignal.dispatch( null );
+//classicSignal.dispatch({ trop: 'bien' });
+classicSignal.dispatch();
+
+
+/*
 const objectStateSignal = new StateSignal<{ on: boolean }>({ on: false });
 
 
@@ -50,3 +66,4 @@ simpleStateSignal.dispatch( false );
 simpleStateSignal.dispatch( false );
 simpleStateSignal.dispatch( true );
 simpleStateSignal.dispose();
+*/

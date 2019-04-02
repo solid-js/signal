@@ -2,21 +2,23 @@
 // ----------------------------------------------------------------------------- STRUCT
 
 /**
+ * Describes a Signal handler type.
+ */
+type THandler<GArguments extends any[]> = (...rest:GArguments) => any
+
+/**
  * Interface describing a internal listener.
  */
-interface IListener<GArguments>
+interface IListener<GArguments extends any[]>
 {
 	scope		:object;
-	handler		:(...GArguments) => any;
+	handler		:THandler<GArguments>
 	once		:boolean;
 }
 
 /**
- * Describes a Signal handler type.
+ * Default arguments generics is optionnal type (array of any)
  */
-type THandler<GArguments> = (...GArguments) => any
-
-
 export class Signal <GArguments extends any[] = any[]>
 {
 	// ------------------------------------------------------------------------- LOCALS
@@ -46,8 +48,7 @@ export class Signal <GArguments extends any[] = any[]>
 	 * @param andCall 
 	 * @returns {number} The register index, to remove easily.
 	 */
-	add ( scopeOrHandler:THandler<GArguments> ):void
-	add ( scopeOrHandler:object, handlerIfScope?: THandler<GArguments>, andCall:GArguments[] = null ):void
+	add ( scopeOrHandler:THandler<GArguments>|object, handlerIfScope?: THandler<GArguments>, andCall:GArguments[] = null ):void
 	{
 		arguments.length == 1
 		? this.register( scopeOrHandler as THandler<GArguments>, null, false, andCall )
@@ -61,8 +62,7 @@ export class Signal <GArguments extends any[] = any[]>
 	 * @param handlerIfScope Scope to apply to handler. Let null to keep default.
 	 * @param andCall 
 	 */
-	addOnce ( scopeOrHandler:THandler<GArguments> ):void
-	addOnce ( scopeOrHandler:object, handlerIfScope?: THandler<GArguments>, andCall:GArguments[] = null ):void
+	addOnce ( scopeOrHandler:THandler<GArguments>|object, handlerIfScope?: THandler<GArguments>, andCall:GArguments[] = null ):void
 	{
 		arguments.length == 1
 		? this.register( scopeOrHandler as THandler<GArguments>, null, true, andCall )
@@ -98,7 +98,7 @@ export class Signal <GArguments extends any[] = any[]>
 	 * Dispatch the signal to all listeners. Will call all registered listeners with passed arguments.
 	 * Will return the list of listeners returns (listeners not returning anythings will be ignored)
 	 */
-	dispatch (...rest):any[]
+	dispatch (...rest:GArguments):any[]
 	{
 		const listenersToRemove	:IListener<GArguments>[] = [];
 		const results = this._listeners.filter( currentListener =>
