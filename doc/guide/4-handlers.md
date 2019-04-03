@@ -17,7 +17,7 @@ class MyClass
 
 	myHandler ()
 	{
-		// this will be "lost"
+		// "this" will be "lost"
 		console.log( this ) // undefined
 	}
 }
