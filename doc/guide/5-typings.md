@@ -1,8 +1,6 @@
 # Typings
 
-?> The next part is only if you use Signal with Typescript.
-
-
+> The next part is only if you use Signal with Typescript.
 
 By default, any Signals will have argument types set to `any[]`, which will disable type hint for handlers.
 
