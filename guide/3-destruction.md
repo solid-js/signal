@@ -25,4 +25,4 @@ class MyClass
 	}
 }
 ```
-?> __NOTE__ : `delete` cannot be done with `readonly` statements.
+> __NOTE__ : `delete` cannot be done with `readonly` statements.

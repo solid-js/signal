@@ -5,7 +5,7 @@ Here is the naming convention we use with Solid-JS, we strongly recommand you to
 
 - Signal names should always starts with `on`.
 - Signal names should always clearly express action and subjet.
-- Signal names should always use preterit.
+- Signal names should use preterit if possible.
 
 ### Some examples :
 - `onWindowResized`
@@ -14,9 +14,12 @@ Here is the naming convention we use with Solid-JS, we strongly recommand you to
 - `onErrorThrown`
 
 ### Bad examples :
+!> Do not name Signals like so :
 - `userConnectingSignal`
 - `messageReception`
 
+### Ok examples :
+- `onReady` (without preterit, to avoid `onReadinessStateChanged` for example)
 
 ### Auto-complete
 
@@ -25,4 +28,8 @@ If you follow those simple rules while naming your signals, auto-completion will
 
 ```javascript
 myObject.on // will show every signals on myObject
+// ...
+myObject.onModelConnected
+myObject.onThingUpdated
+// ...
 ```

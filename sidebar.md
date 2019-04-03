@@ -1,7 +1,7 @@
 
 * Signal
-  - [Read me first](README.md)
-  - [Concept](concept.md)
+  - [Read me first]()
+  - [API](api.md)
 
 * Usage
   - [Statement](guide/1-statement.md)
@@ -9,9 +9,9 @@
   - [Destruction](guide/3-destruction.md)
   - [Handlers](guide/4-handlers.md)
   - [Typings](guide/5-typings.md)
-  - [Examples](guide/6-examples.md)
+  - [Add and call](guide/6-add-and-call.md)
 
-* API
-  - [Signal](api/1-signal.md)
-  - [EventSignal](api/2-event-signal.md)
-  - [StateSignal](api/3-state-signal.md)
+* Examples
+  - [Signal](examples/1-signal.md)
+  - [EventSignal](examples/2-event-signal.md)
+  - [StateSignal](examples/3-state-signal.md)
