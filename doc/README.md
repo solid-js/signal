@@ -96,3 +96,7 @@ State Signal __TODO__
 ### Solid-js
 
 __TODO__
+
+---
+
+### [Continue reading](guide/1-statement)

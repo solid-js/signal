@@ -101,6 +101,6 @@ __TODO__
 
 ---
 
-### [Online documentation](https://solid-js.github.io/signal/)
+### [Online documentation](https://solid-js.github.io/signal/#/guide/1-statement)
 
 _[Made with Solid-JS](https://github.com/solid-js/typescript-npm-starter/)_
