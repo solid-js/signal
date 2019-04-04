@@ -2,6 +2,9 @@
 
 > Signal is an object based event system.
 
+
+### Concept
+
 Classic events dispatcher systems are __string based__, which can be difficult to track across your application.
 
 ```javascript
@@ -23,10 +26,27 @@ onModelReady.dispatch({
 })
 ```
 
+### Install
 
-# With classes
+`npm i -S @solid-js/signal`
 
-Signal can work inside a functionnal workflow, as well as in a oriented object paradygm.
+### Size
+
+__TODO__
+
+### Dependencies
+
+__TODO__
+
+### History
+
+This library comes from [Robert Penner's AS3 Signal](https://github.com/robertpenner/as3-signals).
+This is not a port, it has been entirely remade for Typescript and Javascript.
+
+
+### Works well with classes
+
+Signal can work inside a __functionnal workflow__, as well as in a __object oriented paradygm__.
 Here is an example of Signals implements to create clear communication flow between objects.
 
 ```javascript
@@ -61,15 +81,18 @@ class UserView
 }
 ```
 
-# Typescript
+### Typescript
 
 This library comes with __Typescript definitions__. Source code is pre-compiled to Javascript modules so Typescript is __opt-in and up to you__.
 Signals can have [static types set](guide/5-typings.md) to help error checking in your project.
 
-# Event Signal
+### More ...
 
 
+Event Signal __TODO__
+State Signal __TODO__
 
 
-# State Signal
+### Solid-js
 
+__TODO__
