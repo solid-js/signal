@@ -27,7 +27,7 @@ if ( !isWip )
 	// Check if there is a missing argument
 	if ( !increment || !message )
 	{
-		error(`Usage : npm run publish (patch|minor|major) "message"\nex : npm run publish patch "Woopsy"`);
+		error(`Usage : npm run release (patch|minor|major) "message"\nex : npm run release patch "Woopsy"`);
 	}
 
 	// Increment and throw if increment value is not right
