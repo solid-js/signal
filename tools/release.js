@@ -1,16 +1,9 @@
 /**
- * Release mode (patch / minor / major) :
+ * Release mode (wip / patch / minor / major) :
  * NPM Script to release current version to Git and NPM.
  * First argument is increment of package.json (patch / minor / major)
+ * or "wip" for work in progress.
  * Second argument is commit message
- *
- * Husky git hooks will do the compile / test / publish stuff 
- * 
- * WIP (wip) : 
- *
- * NPM Script to release Work In Progress to Git and nothing to NPM.
- * Nothing will be compiled
- * No Husky hooks will be triggered.
  */
 const { log, error, exec, inRealPackage } = require('./cli');
 
